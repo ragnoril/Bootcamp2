@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace ShooterGame
 {
@@ -23,6 +23,9 @@ namespace ShooterGame
 
         public float Health;
 
+        public int Score;
+        public Text ScoreText;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -31,6 +34,8 @@ namespace ShooterGame
                 rigidbody = GetComponent<Rigidbody>();
             }
 
+            Score = 0;
+            ScoreText.text = "Score: " + Score;
             /*
             if (BulletSpawnPoint == null)
             {
@@ -99,6 +104,12 @@ namespace ShooterGame
             Health -= damage;
             if (Health <= 0)
                 isGameRunning = false;
+        }
+
+        public void AddScore(int val)
+        {
+            Score += val;
+            ScoreText.text = "Score: " + Score;
         }
 
 

@@ -73,7 +73,10 @@ namespace ShooterGame
             Health -= damage;
 
             if (Health <= 0)
+            {
+                Target.AddScore(1);
                 Destroy(gameObject);
+            }
         }
     }
 }
