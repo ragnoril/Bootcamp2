@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,18 @@ namespace ShooterGame
         void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
+
+            EventManager.Instance.OnGameOver += KillMe;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.OnGameOver -= KillMe;
+        }
+
+        private void KillMe()
+        {
+            ObjectPool.Instance.objectPool.Release(this);
         }
 
         private void FixedUpdate()
@@ -35,15 +48,22 @@ namespace ShooterGame
             if (collision.collider.tag == "Enemy")
             {
                 EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-                enemy.GetHurt(Damage);
+
+                EventManager.Instance.EnemyHit(enemy, Damage);
             }
             else if (collision.collider.tag == "Player")
             {
                 PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                player.GetHurt(Damage);
+                EventManager.Instance.PlayerHit(Damage);                
             }
 
-            Destroy(gameObject);
+            //old way
+            //Destroy(gameObject);
+            //old object pool way
+            //gameObject.SetActive(false);
+            // unitys own object pool way
+            KillMe();
+
         }
     }
 }

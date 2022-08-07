@@ -8,7 +8,6 @@ namespace ShooterGame
 
     public class ShootingEnemyController : EnemyController
     {
-
         public GameObject BulletPrefab;
         public Transform BulletSpawnPoint;
 
@@ -18,8 +17,15 @@ namespace ShooterGame
         public float ShootingDistance;
         public bool CanShoot = false;
 
+
         private void FixedUpdate()
         {
+            if (isGameOver)
+            {
+                rigidbody.velocity = Vector3.zero;
+                return;
+            }
+
             float angleBetween = 270f - Mathf.Atan2(transform.position.z - Target.transform.position.z, transform.position.x - Target.transform.position.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0f, angleBetween, 0f));
 
@@ -43,6 +49,9 @@ namespace ShooterGame
             if (!CanShoot)
                 return;
 
+            if (isGameOver)
+                return;
+
             if (fireCooldown > 0)
             {
                 fireCooldown -= Time.deltaTime;
@@ -57,8 +66,15 @@ namespace ShooterGame
         {
             fireCooldown = RateOfFire;
 
+            /*
             GameObject go = GameObject.Instantiate(BulletPrefab, BulletSpawnPoint.position, BulletSpawnPoint.rotation);
             go.transform.forward = transform.forward;
+            */
+
+            Bullet bullet = ObjectPool.Instance.objectPool.Get();
+            bullet.transform.position = BulletSpawnPoint.position;
+            bullet.transform.rotation = BulletSpawnPoint.rotation;
+            bullet.transform.forward = transform.forward;
         }
     }
 

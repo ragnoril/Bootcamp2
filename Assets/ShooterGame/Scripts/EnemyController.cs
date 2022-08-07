@@ -18,10 +18,13 @@ namespace ShooterGame
 
         public float AttackPower;
         public float Health;
+        public bool isGameOver;
 
         // Start is called before the first frame update
         void Start()
         {
+            isGameOver = false;
+
             if (rigidbody == null)
             {
                 rigidbody = GetComponent<Rigidbody>();
@@ -31,10 +34,28 @@ namespace ShooterGame
             {
                 Target = GameObject.Find("Player").GetComponent<PlayerController>();
             }
+
+            EventManager.Instance.OnGameOver += GameOver;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.OnGameOver -= GameOver;
+        }
+
+        public void GameOver()
+        {
+            isGameOver = true;
         }
 
         private void FixedUpdate()
         {
+            if (isGameOver)
+            {
+                rigidbody.velocity = Vector3.zero;
+                return;
+            }
+
             float angleBetween = 270f - Mathf.Atan2(transform.position.z - Target.transform.position.z, transform.position.x - Target.transform.position.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0f, angleBetween, 0f));
 
@@ -47,6 +68,11 @@ namespace ShooterGame
         // Update is called once per frame
         void Update()
         {
+            if (isGameOver)
+            {
+                return;
+            }
+
             if (attackTimer > 0)
             {
                 attackTimer -= Time.deltaTime;
@@ -65,7 +91,8 @@ namespace ShooterGame
         private void Attack()
         {
             attackTimer = AttackSpeed;
-            Target.GetHurt(AttackPower);
+            EventManager.Instance.PlayerHit(AttackPower);
+            //Target.GetHurt(AttackPower);
         }
 
         public void GetHurt(float damage)
@@ -74,7 +101,7 @@ namespace ShooterGame
 
             if (Health <= 0)
             {
-                Target.AddScore(1);
+                EventManager.Instance.EnemyKilled();
                 Destroy(gameObject);
             }
         }

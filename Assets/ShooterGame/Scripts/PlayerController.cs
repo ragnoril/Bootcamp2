@@ -7,6 +7,7 @@ namespace ShooterGame
 {
     public class PlayerController : MonoBehaviour
     {
+        public Animator animator;
         public Rigidbody rigidbody;
         public Transform BulletSpawnPoint;
 
@@ -21,10 +22,11 @@ namespace ShooterGame
 
         private Camera gameCam;
 
-        public float Health;
+        public float MaxHealth;
+        public float CurHealth;
 
         public int Score;
-        public Text ScoreText;
+        public int HighScore;
 
         // Start is called before the first frame update
         void Start()
@@ -34,8 +36,16 @@ namespace ShooterGame
                 rigidbody = GetComponent<Rigidbody>();
             }
 
+            if (animator == null)
+            {
+                animator = GetComponent<Animator>();
+            }
+
+
+            HighScore = PlayerPrefs.GetInt("HighScore", 0);
             Score = 0;
-            ScoreText.text = "Score: " + Score;
+            CurHealth = MaxHealth;
+            
             /*
             if (BulletSpawnPoint == null)
             {
@@ -49,6 +59,14 @@ namespace ShooterGame
 
             isGameRunning = true;
 
+            EventManager.Instance.OnPlayerHit += GetHurt;
+            EventManager.Instance.OnEnemyKilled += EnemyKilled;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.OnPlayerHit -= GetHurt;
+            EventManager.Instance.OnEnemyKilled -= EnemyKilled;
         }
 
         private void FixedUpdate()
@@ -65,6 +83,8 @@ namespace ShooterGame
             Vector3 vel = new Vector3(moveX * Speed * Time.fixedDeltaTime, 0f, moveY * Speed * Time.fixedDeltaTime);
             vel.y = rigidbody.velocity.y;
             rigidbody.velocity = vel;
+
+            animator.SetFloat("Speed", rigidbody.velocity.magnitude);
 
         }
 
@@ -93,23 +113,40 @@ namespace ShooterGame
         {
             fireCooldown = RateOfFire;
 
+            animator.SetTrigger("Shoot");
+
+            /*
             GameObject go = GameObject.Instantiate(BulletPrefab, BulletSpawnPoint.position, BulletSpawnPoint.rotation);
             go.transform.forward = transform.forward;
             go.GetComponent<Bullet>().OwnerTag = transform.tag;
+            */
 
+            //GameObject go = BulletPool.GetPooledObject();
+            Bullet bullet = ObjectPool.Instance.objectPool.Get();
+            bullet.transform.position = BulletSpawnPoint.position;
+            bullet.transform.rotation = BulletSpawnPoint.rotation;
+            bullet.transform.forward = transform.forward;
+            bullet.OwnerTag = transform.tag;
         }
 
         public void GetHurt(float damage)
         {
-            Health -= damage;
-            if (Health <= 0)
-                isGameRunning = false;
+            CurHealth -= damage;
+
+            animator.SetTrigger("GotHurt");
+
+            if (CurHealth <= 0)
+            {
+                EventManager.Instance.GameOver();
+                animator.SetBool("isDead", true);
+            }
         }
 
-        public void AddScore(int val)
+        public void EnemyKilled()
         {
-            Score += val;
-            ScoreText.text = "Score: " + Score;
+            Score += 1;
+            if (Score > HighScore)
+                PlayerPrefs.SetInt("HighScore", Score);
         }
 
 
