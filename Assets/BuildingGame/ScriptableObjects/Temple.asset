@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a37fa8912d1b74e8532f8d2dc84dbc, type: 3}
+  m_Name: Temple
+  m_EditorClassIdentifier: 
+  BuildingName: Temple
+  Cost: 500
+  Prefab: {fileID: 3904746647311586537, guid: 617464fc44b132a41beed08608a09936, type: 3}
