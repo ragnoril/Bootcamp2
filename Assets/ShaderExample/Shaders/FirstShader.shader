@@ -11,7 +11,7 @@ Shader "Bootcamp/FirstShader"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 100
 
         Pass

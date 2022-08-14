@@ -663,11 +663,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 702cb6b4d368ecc46acee7e9abe4a318, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8830486598505832098, guid: 702cb6b4d368ecc46acee7e9abe4a318, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 31908108637ede243ba578108d1d07b4, type: 2}
+      objectReference: {fileID: 2100000, guid: 781f0a2e1f09ec845a44e4f13409ca6f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702cb6b4d368ecc46acee7e9abe4a318, type: 3}
