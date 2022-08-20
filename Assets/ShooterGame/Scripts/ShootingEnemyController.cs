@@ -73,7 +73,7 @@ namespace ShooterGame
         private void Shoot()
         {
             fireCooldown = RateOfFire;
-
+            AudioManager.Instance.PlaySfx((int)SFXList.EnemyShoot);
             /*
             GameObject go = GameObject.Instantiate(BulletPrefab, BulletSpawnPoint.position, BulletSpawnPoint.rotation);
             go.transform.forward = transform.forward;

@@ -7,6 +7,7 @@ namespace ShooterGame
 {
     public class PlayerController : MonoBehaviour
     {
+        public AudioSource audioSource;
         public Animator animator;
         public Rigidbody rigidbody;
         public Transform BulletSpawnPoint;
@@ -28,6 +29,10 @@ namespace ShooterGame
         public int Score;
         public int HighScore;
 
+        public AudioClip fireClip;
+        public AudioClip hurtClip;
+        public AudioClip gameoverClip;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +46,10 @@ namespace ShooterGame
                 animator = GetComponent<Animator>();
             }
 
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
 
             HighScore = PlayerPrefs.GetInt("HighScore", 0);
             Score = 0;
@@ -115,6 +124,8 @@ namespace ShooterGame
 
             animator.SetTrigger("Shoot");
 
+            AudioManager.Instance.PlaySfx((int)SFXList.PlayerShoot);
+
             /*
             GameObject go = GameObject.Instantiate(BulletPrefab, BulletSpawnPoint.position, BulletSpawnPoint.rotation);
             go.transform.forward = transform.forward;
@@ -134,16 +145,18 @@ namespace ShooterGame
             CurHealth -= damage;
 
             animator.SetTrigger("GotHurt");
-
+            
             if (CurHealth <= 0)
             {
                 EventManager.Instance.GameOver();
                 animator.SetBool("isDead", true);
+                AudioManager.Instance.PlaySfx((int)SFXList.GameOver);
             }
         }
 
         public void EnemyKilled()
         {
+            AudioManager.Instance.PlaySfx((int)SFXList.EnemyKilled);
             Score += 1;
             if (Score > HighScore)
                 PlayerPrefs.SetInt("HighScore", Score);
