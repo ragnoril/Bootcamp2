@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.ads": "3.7.5",
     "com.unity.ai.navigation": "1.0.0-exp.4",
     "com.unity.collab-proxy": "1.15.18",
     "com.unity.feature.2d": "1.0.0",

@@ -807,11 +807,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: 812c2d20-8eee-4ee1-8efd-2a84153699bc
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Matching Game 3D
+  organizationId: emirhan-bayyurt
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

@@ -156,6 +156,7 @@ namespace ShooterGame
 
         public void EnemyKilled()
         {
+            AnalyticsManager.Instance.SendAnalyticsEvent("EnemyKilled");
             AudioManager.Instance.PlaySfx((int)SFXList.EnemyKilled);
             Score += 1;
             if (Score > HighScore)
