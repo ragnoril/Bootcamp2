@@ -8,16 +8,24 @@ namespace ShooterGame
 
     public class EnemyController : MonoBehaviour
     {
+        [Header("Unity Components")]
         public Rigidbody rigidbody;
 
         public PlayerController Target;
 
+        [Header("Speed Stats")]
         public float MoveSpeed;
+        [Range(0f,2f)]
         public float AttackSpeed;
         private float attackTimer;
 
+        [Header("Attack and Health Stats")]
         public float AttackPower;
+        [Tooltip("Hit points for the Enemy character. How many health points does it have before dying from wound player attacks?")]
         public float Health;
+
+        
+        [HideInInspector]
         public bool isGameOver;
 
         // Start is called before the first frame update

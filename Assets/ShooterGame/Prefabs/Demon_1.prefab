@@ -1254,6 +1254,7 @@ MonoBehaviour:
   AttackSpeed: 0
   AttackPower: 0
   Health: 20
+  isGameOver: 0
   BulletPrefab: {fileID: 8716768406933832540, guid: 20f625a6f871d7f4aab57311533ac731, type: 3}
   BulletSpawnPoint: {fileID: 202058541018082663}
   RateOfFire: 0.3

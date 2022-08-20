@@ -2217,6 +2217,7 @@ MonoBehaviour:
   AttackSpeed: 0.5
   AttackPower: 7
   Health: 12
+  isGameOver: 0
 --- !u!1 &6670025066871500576
 GameObject:
   m_ObjectHideFlags: 0

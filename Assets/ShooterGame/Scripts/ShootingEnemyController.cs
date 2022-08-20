@@ -12,11 +12,19 @@ namespace ShooterGame
         public Transform BulletSpawnPoint;
 
         public float RateOfFire;
+        [SerializeField]
         private float fireCooldown;
 
         public float ShootingDistance;
         public bool CanShoot = false;
 
+
+
+        [ContextMenu("Say Hello World")]
+        public void HelloWorld()
+        {
+            Debug.Log("Naber Dünya?");
+        }
 
         private void FixedUpdate()
         {
