@@ -33,9 +33,11 @@ namespace ShooterGame
                 rigidbody.velocity = Vector3.zero;
                 return;
             }
-
+            /*
             float angleBetween = 270f - Mathf.Atan2(transform.position.z - Target.transform.position.z, transform.position.x - Target.transform.position.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0f, angleBetween, 0f));
+            */
+            transform.LookAt(Target.transform);
 
             if (Vector3.Distance(transform.position, Target.transform.position) > ShootingDistance)
             {

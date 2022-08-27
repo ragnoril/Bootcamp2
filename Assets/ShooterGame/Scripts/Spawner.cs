@@ -7,7 +7,7 @@ namespace ShooterGame
 {
     public class Spawner : MonoBehaviour
     {
-
+        public string[] EnemyNames;
         public GameObject[] EnemyPrefabs;
 
         public float SpawnRate;
@@ -38,7 +38,7 @@ namespace ShooterGame
 
         private void SpawnEnemy()
         {
-            int enemyId = UnityEngine.Random.Range(0, EnemyPrefabs.Length);
+            int enemyId = UnityEngine.Random.Range(0, EnemyNames.Length);
             Vector2 randInsideCircle = UnityEngine.Random.insideUnitCircle * 3f;
 
             Vector3 randPos = transform.position;
@@ -46,7 +46,8 @@ namespace ShooterGame
             randPos.z += randInsideCircle.y;
             randPos.y = 1f;
 
-            GameObject go = Instantiate(EnemyPrefabs[enemyId], randPos, Quaternion.identity);
+            GameObject prefab = Resources.Load(EnemyNames[enemyId]) as GameObject;
+            GameObject go = Instantiate(prefab, randPos, Quaternion.identity);
         }
     }
 }
